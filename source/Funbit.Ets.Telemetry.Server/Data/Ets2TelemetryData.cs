@@ -31,7 +31,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
         {
             if (bytes == null)
                 return string.Empty;
-            return Encoding.UTF8.GetString(bytes, 0, Array.FindIndex(bytes, b => b == 0));
+            var length = Array.FindIndex(bytes, b => b == 0);
+            if (length == -1) length = bytes.Length;
+            return Encoding.UTF8.GetString(bytes, 0, length);
         }
 
         public IEts2Game Game => new Ets2Game(_rawData);
